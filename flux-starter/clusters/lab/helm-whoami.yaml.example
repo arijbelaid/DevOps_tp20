@@ -1,0 +1,24 @@
+# TP20 partie 4 : à renommer en helm-whoami.yaml après avoir copié votre chart du TP15 dans charts/whoami/.
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: whoami-helm
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: whoami
+  namespace: whoami-helm
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: ./charts/whoami # chart lu directement dans le dépôt Git
+      sourceRef:
+        kind: GitRepository
+        name: flux-system
+        namespace: flux-system
+  # TODO : valeurs du chart (replicaCount: 2, ingress.enabled: true, ingress.host: whoami-flux.lab.local)
+  values: {}
+  # TODO : en cas d'échec de mise à jour, revenir automatiquement à la version précédente
+  #        (upgrade.remediation.retries: 2, upgrade.remediation.strategy: rollback)

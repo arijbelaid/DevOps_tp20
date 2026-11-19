@@ -1,0 +1,15 @@
+# TP20 partie 2 : à placer dans clusters/lab/ du dépôt créé par "flux bootstrap".
+# Flux applique tout ce qui se trouve dans clusters/lab/, y compris ce fichier.
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: apps-dev
+  namespace: flux-system
+spec:
+  interval: 1m # fréquence de réconciliation
+  sourceRef:
+    kind: GitRepository
+    name: flux-system # dépôt créé par le bootstrap
+  path: ./apps/dev
+  # TODO : supprimer du cluster les ressources retirées de Git (prune)
+  # TODO : attendre que le Deployment soit prêt (wait: true, timeout: 2m)

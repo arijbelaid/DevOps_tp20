@@ -1,0 +1,18 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: whoami-flux
+
+resources:
+  - namespace.yaml
+  - ../base
+
+configMapGenerator:
+  - name: whoami-config
+    behavior: merge
+    literals:
+      - WHOAMI_NAME=flux-dev
+
+images:
+  - name: traefik/whoami
+    newTag: v1.10.0 # flux-image-automation pourra mettre ce tag à jour (défi)
